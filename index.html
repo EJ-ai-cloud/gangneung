@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏠 강릉 별장 예약 캘린더</title>
+  <!-- FullCalendar CDN -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+  <style>
+    body { margin: 0; padding: 10px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    #calendar { max-width: 100%; margin: 0 auto; }
+    .fc-header-toolbar { font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center; font-size: 18px;">🏠 강릉 별장 예약</h2>
+  <div id='calendar'></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'ko',
+        selectable: true,
+        headerToolbar: {
+          left: 'prev,next',
+          center: 'title',
+          right: 'today'
+        },
+        dateClick: function(info) {
+          var name = prompt('예약자 이름을 입력하세요:');
+          if (name) {
+            calendar.addEvent({
+              title: name,
+              start: info.dateStr,
+              allDay: true
+            });
+            // TODO: Firebase DB에 저장하는 코드 연동
+          }
+        }
+      });
+      calendar.render();
+    });
+  </script>
+</body>
+</html>
